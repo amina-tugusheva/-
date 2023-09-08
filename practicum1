@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace practicum1
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("a= ");
+            int a = int.Parse(Console.ReadLine());
+            Console.Write("b= ");
+            int b = int.Parse(Console.ReadLine());
+            Console.Write("c= ");
+            int c = int.Parse(Console.ReadLine());
+            int sum = a + b + c;
+            Console.WriteLine(a + " + " + b + " + " + c + " = " + sum);
+        }
+    }
+}
