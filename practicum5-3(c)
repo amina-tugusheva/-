@@ -1,0 +1,33 @@
+///III.Разработать рекурсивный метод, возвращающий значение
+///3) для вычисления количества цифр заданного натурального числа
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static int F(int n) //рекурсвный метод
+        {
+     
+            if (n == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1 + F(n / 10);
+            }
+        }
+        static void Main()
+        {
+            Console.Write("n = ");
+            int n = int.Parse(Console.ReadLine());
+            int k = F(n); //вызов метода F
+            Console.WriteLine(k);
+        }
+    }
+}
