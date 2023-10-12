@@ -1,0 +1,38 @@
+//III.Дана строка, в которой содержится осмысленное текстовое сообщение.Слова
+//сообщения разделяются пробелами и знаками препинания.
+//13. Найти самое короткое слово сообщения. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace pracricum8_3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string message = "текст, для? проверки программы.";
+
+            // Разделить строку на слова, используя пробелы и знаки препинания в качестве разделителей
+            string[] words = message.Split(new char[] { ' ', ',', '.', '!', '?' });
+
+            // Инициализировать переменную для хранения самого короткого слова
+            string shortestWord = words[0];
+
+            // Найти самое короткое слово
+            foreach (string word in words)
+            {
+                if (!string.IsNullOrEmpty(word) && word.Length < shortestWord.Length)
+                {
+                    shortestWord = word;
+                }
+            }
+
+            Console.WriteLine("Самое короткое слово: " + shortestWord);
+
+            Console.ReadLine();
+        }
+    }
+}
