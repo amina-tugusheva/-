@@ -1,0 +1,67 @@
+//IV. Дан массив размером n×n, элементы которого целые числа.
+//Замечание.Для хранения массив n×n использовать двумерный или ступенчатый массив.Свой выборобосновать.
+
+//   13. Для каждой строки найти номер первого отрицательного элемента и записать данные в новый массив
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace practicum7_4
+{
+    class Program
+    {
+        static void Print1(int[] a) //print одномерного массива
+        {
+            foreach (int elem in a)
+            {
+                Console.Write("{0} ", elem);
+            }
+            Console.WriteLine();
+        }
+        static void Print(int[,] A) // print двумерного массива
+        {
+            for (int i = 0; i < A.GetLength(0); i++)
+            {
+                for (int j = 0; j < A.GetLength(1); j++)
+                {
+                    Console.Write("{0} ", A[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Main()
+        {
+            Console.Write("n= ");
+            int n = int.Parse(Console.ReadLine());
+            int [,] a = new int[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write("a[{0},{1}]= ", i, j);
+                    a[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            Console.WriteLine("Исходный массив:");
+            Print(a);
+            //int n = a.Length;
+            int[] z = new int[n];
+            for (int i = 0; i < n; i++) //меняются местами i-ая и (n-i-1)-ая строки
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (a[i, j] < 0)
+                    {
+                        z[i] = j + 1;
+                        break;
+                    }
+                }
+
+            }
+            Console.WriteLine("полученный массив:");
+            Print1(z);
+        }
+    }
+}
