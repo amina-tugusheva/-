@@ -1,0 +1,50 @@
+//. Дана последовательность целых чисел.
+//Замечание.Для хранения последовательности можно использовать одномерный массив
+//или любую другую подходящую коллекцию.Выбор структуры данных обосновать. Ввод вывод данных – файловый.
+//13. Вывести на экран в порядке возрастания все элементы, меньшие заданного числа, увеличив их в три раза.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace practicum15_1_13
+{
+    class Program
+    {
+        static void Main()
+        {
+            using (StreamReader file = new StreamReader(@"C:\Users\PC\Desktop\g.txt"))
+            {
+                using (StreamWriter fileout = new StreamWriter(@"C:\Users\PC\Desktop\o (2).txt"))
+                {
+                    string line = file.ReadLine();
+                    string[] mas = line.Split(' ');
+                    int n = int.Parse(mas[0]);
+
+                    int[] MyArray = new int[n];
+                    for (int i = 0; i < n; i++)
+                    {
+                        MyArray[i] = int.Parse(mas[i]);
+                        //int[] number = Array.ConvertAll(mas, int.Parse);
+                    }
+                    int[] number = Array.ConvertAll(mas, int.Parse);
+                    int c = int.Parse(Console.ReadLine());
+                    var lowNums = from m in number where m <=c orderby m select m;
+                    foreach (var x in lowNums)
+                    {
+                        fileout.Write(x);
+                        Console.Write("{0} ", x);
+                    }
+                }
+            }
+
+
+
+    }
+
+}
+
+}
