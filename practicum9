@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace practicum9
+{
+    class Program
+    {
+        static void Main()
+        {
+            using (StreamReader file = new StreamReader(@"C:\Users\PC\Desktop\g.txt"))
+            {
+                using (StreamWriter fileOut = new StreamWriter(@"C:\Users\PC\Desktop\o.txt", true))
+                {
+                    string line = file.ReadLine();
+                    string[] mas = line.Split(' ');
+                    int n = int.Parse(mas[0]);
+                    
+                    int[] Ar = new int[n];
+                    for (int i = 0; i < n; i++)
+                    {
+
+                        Ar[i] = int.Parse(mas[i]);
+                        int[] numbers = Array.ConvertAll(mas, int.Parse);
+                        if (numbers[i] >= 0)
+                        {
+                            fileOut.Write(mas[i]);
+                        }
+                        if (numbers[i] < 0)
+                        {
+                            fileOut.Write(mas[i]);
+                        }
+                    }
+                    
+                }
+            }
+            
+            
+                
+
+            
+        }
+    }
+}
