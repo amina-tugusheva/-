@@ -1,0 +1,50 @@
+//13.Дан файл, компонентами которого являются целые числа. Переписать в новый файл
+//сначала все отрицательные компоненты из первого, потом все положительные
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace practicum9
+{
+    class Program
+    {
+        static void Main()
+        {
+            using (StreamReader file = new StreamReader(@"C:\Users\tugushevaai\Desktop\input.txt"))
+            {
+                using (StreamWriter fileOut = new StreamWriter(@"C:\Users\tugushevaai\Desktop\output.txt", true))
+                {
+                    string line = file.ReadLine();
+                    string[] mas = line.Split(' ');
+                    int n = int.Parse(mas[0]);
+
+                    int[] Ar = new int[n];
+                    List<int> l = new List<int>();
+
+                    for (int i = 0; i < n; i++)
+                    {
+
+                        Ar[i] = int.Parse(mas[i]);
+                        int[] numbers = Array.ConvertAll(mas, int.Parse);
+
+                        if (numbers[i] < 0)
+                        {
+                            fileOut.Write(numbers[i] + " ");
+                        }
+                        else
+                        {
+                            l.Add(numbers[i]);
+                        }
+                    }
+                    foreach (int ch in l)
+                    {
+                        fileOut.Write(ch + " ");
+                    }
+                }
+            }
+        }
+    }
+}
