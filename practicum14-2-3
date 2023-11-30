@@ -1,0 +1,94 @@
+//II.Решить задачу, разработав собственную структуру для хранения информации
+//Замечания:
+// Во всех задачах данного раздела подразумевается, что исходная информация хранится в
+//текстовом файле input.txt, каждая строка которого содержит полную информацию о некотором
+//объекте; результирующая информация должна быть записана в файл output.txt.
+// Для хранения данных внутри программы организовать массив структур.
+// Сортировку данных реализовать, реализуя метод CompareTo(T) стандартного интерфейса
+//IComparable<in T>.
+//3) На основе данных входного файла составить багажную ведомость камеры хранения,
+//включив следующие данные: ФИО пассажира, количество вещей, общий вес вещей.
+//Вывести в новый файл информацию о тех пассажирах, средний вес багажа которых
+//превышает заданный, отсортировав их по количеству вещей, сданных в камеру хранения.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace practicum14_2_3
+{
+    struct BaggageList : IComparable<BaggageList> //структура наследует стандартный интерфейс
+    { // IComparable<in T>, в данном случае в качестве
+        public readonly string f, i, o;
+        public int kv, m; 
+        public BaggageList(string f, string i, string o, int kv, int m)
+        {
+            this.f = f;
+            this.i = i;
+            this.o = o;
+            this.kv = kv;
+            this.m = m;
+        }
+        
+        public void Show(StreamWriter fout) //метод
+        {
+            fout.WriteLine("{0} {1} {2} {3} {4}", f, i, o, kv, m);
+        }
+        public int CompareTo(BaggageList obj) //проводим переопределением метода
+        { // CompareTo(T) так, чтобы сравнение элементов
+            return this.kv.CompareTo(obj.kv);
+        }
+    }
+    class Program
+    {
+        static public BaggageList[] Input() //читаем данные из файла
+        {
+            using (StreamReader fileIn = new StreamReader(@"C:\Users\PC\Desktop\p.txt"))
+            {
+                int n = int.Parse(fileIn.ReadLine());
+                //int n = System.IO.File.ReadAllLines(@"C:\Users\PC\Desktop\p.txt").Length;
+                BaggageList[] ar = new BaggageList[n];
+                for (int i = 0; i < n; i++)
+                {
+                    string[] text = fileIn.ReadLine().Split(' ');
+                    string F = text[0];
+                    string I = text[1];
+                    string O = text[2];
+                    ar[i] = new BaggageList(F,I,O, int.Parse(text[3]), int.Parse(text[4]));
+                }
+                return ar;
+            }
+        }
+        static void Print(List<BaggageList> ar) //выводим данные на экран
+        {
+            using (StreamWriter fout = new StreamWriter(@"C:\Users\PC\Desktop\po.txt"))
+            {
+                foreach (BaggageList item in ar)
+                {
+                    item.Show(fout);
+                }
+            }
+                
+        }
+        
+        static void Main()
+        {
+            BaggageList[] array = Input();
+
+            List<BaggageList> more = new List<BaggageList>();
+            int k = int.Parse(Console.ReadLine());
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i].m > k)
+                {
+                    more.Add(array[i]);
+                }
+                more.Sort();
+                Print(more);
+            }
+            //Proverka(array);
+        }
+    }
+}
