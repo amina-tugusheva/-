@@ -1,0 +1,155 @@
+//Задание 2.Создать класс Triangle, содержащий следующие члены класса:
+//1.Поля:
+//• int a, b, c;
+//2.Конструктор, позволяющий создать экземпляр класса с заданными длинами сторон.
+//3. Методы, позволяющие:
+//• вывести длины сторон треугольника на экран;
+//• расчитать периметр треугольника;
+//• расчитать площадь треугольника.
+//4. Свойство:
+//• позволяющее получить-установить длины сторон треугольника (доступное для чтения
+//и записи);
+//• позволяющее установить, существует ли треугольник с данными длинами сторон
+//(доступное только для чтения).
+//5.Индексатор, позволяющий по индексу 0 обращаться к полю a, по индексу 1 – к полю b,
+//по индексу 2 – к полю c, при других значениях индекса выдается сообщение об ошибке.
+//6. Перегрузку:
+//• операции++(--): одновременно увеличивает(уменьшает) значение полей a, b и c на 1;
+//• констант true и false: обращение к экземпляру класса дает значение true, если
+//треугольник с заданными длинами сторон существует, иначе false;
+//• операции *: одновременно домножает поля a, b и c на скаляр.
+//Продемонстрировать работу класса. 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace pr17
+{
+    class Triangle
+    {
+        private int a, b, c;
+
+        public Triangle(int Sa, int Sb, int Sc)//Конструктор, позволяющий создать экземпляр класса с заданными длинами сторон.
+        {
+            a = Sa;
+            b = Sb;
+            c = Sc;
+        }
+        public void Size() //Метод, позволяющий вывести длины сторон треугольника на экран;
+        {
+            Console.WriteLine("{0] [1] [2]", a, b, c);
+        }
+        public int P()//Метод, позволяющий расчитать периметр треугольника;
+        {
+            int p = a + b + c;
+            return p;
+            //Console.WriteLine(p);
+        }
+        public double S()//Метод, позволяющий расчитать площадь треугольника.
+        {
+            double p = P() / 2.0;
+            double s = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
+            return s;
+            //Console.WriteLine(s);
+        }
+        //Свойство:
+        //• позволяющее получить-установить длины сторон треугольника (доступное для чтени и записи);
+        public int Sa
+        {
+            get { return a; }
+            set { a = value; }
+        }
+        public int Sb
+        {
+            get { return b; }
+            set { b = value; }
+        }
+        public int Sc
+        {
+            get { return c; }
+            set { c = value; }
+        }
+        //Свойство:
+        //• позволяющее установить, существует ли треугольник с данными длинами сторон
+        //(доступное только для чтения).
+        public bool existence
+        {
+            get { return a + b > c && a + c > b && b + c > a; }
+        }
+        //5.Индексатор, позволяющий по индексу 0 обращаться к полю a, по индексу 1 – к полю b,
+        //по индексу 2 – к полю c, при других значениях индекса выдается сообщение об ошибке.
+        public int this[int i]
+        {
+            get
+            {
+                if(i == 0)
+                {
+                    return a;
+                }
+                else if (i == 1)
+                {
+                    return b;
+                }
+                else if (i == 2)
+                {
+                    return c;
+                }
+                else
+                {
+                    Console.WriteLine("Индекс {0} выходит за границы массива", i);
+                    return 0;
+                }
+            }
+        }
+        //6. Перегрузку:
+        //• операции++(--): одновременно увеличивает(уменьшает) значение полей a, b и c на 1;
+        public static Triangle operator ++(Triangle t)
+        {
+            Triangle temp = new Triangle(t);
+
+            t.a++;
+            t.b++;
+            t.c++;
+            return t;
+        }
+        public static Triangle operator --(Triangle t)
+        {
+            t.a--;
+            t.b--;
+            t.c--;
+            return t;
+        }
+        //• констант true и false: обращение к экземпляру класса дает значение true, если
+        //треугольник с заданными длинами сторон существует, иначе false;
+        public static bool operator true(Triangle t)
+        {
+            return t.existence;
+        }
+        public static bool operator false(Triangle t)
+        {
+            return !t.existence;
+        }
+        //• операции *: одновременно домножает поля a, b и c на скаляр.
+        //Продемонстрировать работу класса. 
+        public static Triangle operator *(Triangle t, int skal)
+        {
+            t.a *= skal;
+            t.b *= skal;
+            t.c *= skal;
+            return t;
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Triangle t = new Triangle(3, 4, 5);
+            //onet.Triangle(3, 3, 5);
+            t.Size();
+
+        }
+    }
+}
