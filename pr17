@@ -19,143 +19,176 @@
 //треугольник с заданными длинами сторон существует, иначе false;
 //• операции*: одновременно домножает поля a, b и c на скаляр.
 //Продемонстрировать работу класса. 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace practicum17
+namespace pr17
 {
     class Triangle
     {
         private int a, b, c;
 
-        public Triangle(int sideA, int sideB, int sideC)
+        public Triangle(int Sa, int Sb, int Sc)//Конструктор, позволяющий создать экземпляр класса с заданными длинами сторон.
         {
-            a = sideA;
-            b = sideB;
-            c = sideC;
+            a = Sa;
+            b = Sb;
+            c = Sc;
         }
-
-        public void PrintSides()
+        public void Side() //Метод, позволяющий вывести длины сторон треугольника на экран;
         {
-            Console.WriteLine($"Side a: {a}, Side b: {b}, Side c: {c}");
+            
+            Console.WriteLine("{0} {1} {2}", a, b, c);
         }
-
-        public int CalculatePerimeter()
+        public int P()//Метод, позволяющий расчитать периметр треугольника;
         {
-            return a + b + c;
+            int p = a + b + c;
+            return p;
+            //Console.WriteLine(p);
         }
-
-        public double CalculateArea()
+        public double S()//Метод, позволяющий расчитать площадь треугольника.
         {
-            double s = CalculatePerimeter() / 2.0;
-            return Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+            double p = P() / 2.0;
+            double s = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
+            return s;
+            //Console.WriteLine(s);
         }
-
-        public int SideA
+        //Свойство:
+        //• позволяющее получить-установить длины сторон треугольника (доступное для чтени и записи);
+        public int Sa
         {
             get { return a; }
             set { a = value; }
         }
-
-        public int SideB
+        public int Sb
         {
             get { return b; }
             set { b = value; }
         }
-
-        public int SideC
+        public int Sc
         {
             get { return c; }
             set { c = value; }
         }
-
-        public bool Exists
+        //Свойство:
+        //• позволяющее установить, существует ли треугольник с данными длинами сторон
+        //(доступное только для чтения).
+        public bool existence
         {
             get { return a + b > c && a + c > b && b + c > a; }
         }
-
-        public int this[int index]
+        //5.Индексатор, позволяющий по индексу 0 обращаться к полю a, по индексу 1 – к полю b,
+        //по индексу 2 – к полю c, при других значениях индекса выдается сообщение об ошибке.
+        public int this[int i]
         {
             get
             {
-                if (index == 0)
+                if (i == 0)
+                {
                     return a;
-                else if (index == 1)
+                }
+                else if (i == 1)
+                {
                     return b;
-                else if (index == 2)
+                }
+                else if (i == 2)
+                {
                     return c;
+                }
                 else
-                    throw new IndexOutOfRangeException("Index out of range");
+                {
+                    Console.WriteLine("Индекс {0} выходит за границы массива", i);
+                    return 0;
+                }
             }
         }
-
-        public static Triangle operator ++(Triangle triangle)
+        //6. Перегрузку:
+        //• операции++(--): одновременно увеличивает(уменьшает) значение полей a, b и c на 1;
+        public static Triangle operator ++(Triangle t)
         {
-            triangle.a++;
-            triangle.b++;
-            triangle.c++;
-            return triangle;
+            /*
+            Triangle temp = new Triangle(t);
+            temp.a = t.a + 1;
+            temp.b = t.b + 1;
+            temp.c = t.c + 1;
+            return temp;
+            */
+            t.a++;
+            t.b++;
+            t.c++;
+            return t;
         }
-
-        public static Triangle operator --(Triangle triangle)
+        public static Triangle operator --(Triangle t)
         {
-            triangle.a--;
-            triangle.b--;
-            triangle.c--;
-            return triangle;
+            t.a--;
+            t.b--;
+            t.c--;
+            return t;
         }
-
-        public static bool operator true(Triangle triangle)
+        //• констант true и false: обращение к экземпляру класса дает значение true, если
+        //треугольник с заданными длинами сторон существует, иначе false;
+        public static bool operator true(Triangle t)
         {
-            return triangle.Exists;
+            return t.existence;
         }
-
-        public static bool operator false(Triangle triangle)
+        public static bool operator false(Triangle t)
         {
-            return !triangle.Exists;
+            return !t.existence;
         }
-
-        public static Triangle operator *(Triangle triangle, int scalar)
+        //• операции *: одновременно домножает поля a, b и c на скаляр.
+        //Продемонстрировать работу класса. 
+        public static Triangle operator *(Triangle t, int scal)
         {
-            triangle.a *= scalar;
-            triangle.b *= scalar;
-            triangle.c *= scalar;
-            return triangle;
+            t.a *= scal;
+            t.b *= scal;
+            t.c *= scal;
+            return t;
         }
     }
-
     class Program
     {
         static void Main()
         {
-            Triangle triangle = new Triangle(3, 4, 5);
+            Console.WriteLine("введите стороны треугольника:");
+            int A = int.Parse(Console.ReadLine());
+            int B = int.Parse(Console.ReadLine());
+            int C = int.Parse(Console.ReadLine());
+            Triangle triangle = new Triangle(A, B, C);
+            Console.WriteLine("стороны треугольника равны:");
+            triangle.Side();
 
-            triangle.PrintSides();
-            Console.WriteLine($"Perimeter: {triangle.CalculatePerimeter()}");
-            Console.WriteLine($"Area: {triangle.CalculateArea()}");
+            Console.WriteLine("существование треугольника:");
+            Console.WriteLine(triangle.existence);
 
-            triangle.SideA = 5;
-            Console.WriteLine($"Side A: {triangle.SideA}");
+            Console.WriteLine("периметр:");
+            Console.WriteLine(triangle.P());
+            Console.WriteLine("площадь:" );
+            Console.WriteLine(triangle.S());
+            
 
-            Console.WriteLine($"Triangle exists: {triangle.Exists}");
+            Console.WriteLine("введите новое значение для стороны А:");
+            int newvalue = int.Parse(Console.ReadLine());
+            triangle.Sa = newvalue;
 
-            Console.WriteLine($"Index 0: {triangle[0]}");
-
+            Console.WriteLine("стороны треугольника равны:");
+            triangle.Side();
+            
+            Console.WriteLine("введите индекс стороны, значение которой хотите получить:");
+            int I = int.Parse(Console.ReadLine());
+            Console.WriteLine("сторона с индексом {0}: ", I);
+            Console.WriteLine(triangle[I]);
+            //triangle[0];
             ++triangle;
-            Console.WriteLine("After increment:");
-            triangle.PrintSides();
+            Console.WriteLine("стороны треугольника после вызова перегрузкi ++");
+            triangle.Side();
+            Console.WriteLine("введите число, на которое нужно умножить стороны:");
+            int k = int.Parse(Console.ReadLine());
+            triangle *= k;
+            triangle.Side();
 
-            if (triangle)
-                Console.WriteLine("Triangle exists");
-            else
-                Console.WriteLine("Triangle does not exist");
-
-            triangle *= 2;
-            Console.WriteLine("After multiplication:");
-            triangle.PrintSides();
         }
     }
 }
