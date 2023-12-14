@@ -1,0 +1,100 @@
+//13–14. Найти такую точку, сумма расстояний от которой до остальных точек множества аксимальна.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+namespace MyProgram
+{
+    struct SPoint //описание структуры
+    {
+        public int x, y; 
+        public SPoint(int x, int y) //конструктор структуры
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void Show()      
+        {
+            Console.WriteLine("({0}, {1})", x, y);
+        }
+
+        public double Distance(SPoint x, SPoint x0)
+        {
+            return Math.Sqrt((x.x - x0.x) * (x.x - x0.x) + (x.y - x0.y) * (x.y - x0.y));
+        }
+    }
+
+    class Program
+    {
+        static public SPoint[] Input() //читаем данные из файла
+        {
+            using (StreamReader fileIn = new StreamReader(@"C:\Users\PC\Desktop\f.txt"))
+            {
+                int n = int.Parse(fileIn.ReadLine()); //длина массива
+                SPoint[] ar = new SPoint[n]; //описание массива структур
+                for (int i = 0; i < n; i++)
+                {
+                    string[] text = fileIn.ReadLine().Split(' ');
+                    ar[i] = new SPoint(int.Parse(text[0]), int.Parse(text[1])); //вызов конструктора структуры
+                }
+                return ar; //в качестве результата метод возвращает ссылку на массив структур
+            }
+        }
+
+
+
+        static void Print(SPoint[] array) //выводим данные на экран
+        {
+            foreach (SPoint item in array)
+            {
+                item.Show(); //обращается к методу экземпляра структуры
+            }
+        }
+
+        static SPoint Maxsum(SPoint[] array) //поиск наиболее удаленной точки от других по сумме расстояний
+        {
+            SPoint temp = array[0];
+            double maxd = 0;
+            double sum = 0;
+ 
+            List<SPoint> max = new List<SPoint>();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < array.Length; j++)
+                {
+                    sum += array[j].Distance(array[i], array[j]);
+                }
+                if (sum >= maxd)
+                {
+                    max.Add(array[i]);
+
+                    maxd = sum;
+                    temp = array[i];
+                }
+                sum = 0;
+            }
+
+            foreach(SPoint mdpoints in max)
+            {
+                mdpoints.Show();
+            }
+
+            return temp;
+        }
+
+
+        static void Main() //основной метод
+        {
+            SPoint[] array = Input();
+
+            //Console.WriteLine();
+            //Print(array);
+            Console.WriteLine("Точка, сумма расстояний от которой до остальных точек множества аксимальна: ");
+            Maxsum(array);
+        }
+    }
+}
