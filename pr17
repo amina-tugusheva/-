@@ -40,7 +40,7 @@ namespace pr17
         }
         public void Side() //Метод, позволяющий вывести длины сторон треугольника на экран;
         {
-            
+
             Console.WriteLine("{0} {1} {2}", a, b, c);
         }
         public int P()//Метод, позволяющий расчитать периметр треугольника;
@@ -109,24 +109,31 @@ namespace pr17
         //• операции++(--): одновременно увеличивает(уменьшает) значение полей a, b и c на 1;
         public static Triangle operator ++(Triangle t)
         {
-            /*
-            Triangle temp = new Triangle(t);
+            
+            Triangle temp = new Triangle(t.a, t.b, t.c);
             temp.a = t.a + 1;
             temp.b = t.b + 1;
             temp.c = t.c + 1;
             return temp;
-            */
+            
+            /*
             t.a++;
             t.b++;
             t.c++;
-            return t;
+            return t;*/
         }
         public static Triangle operator --(Triangle t)
         {
+            Triangle temp = new Triangle(t.a, t.b, t.c);
+            temp.a = t.a - 1;
+            temp.b = t.b - 1;
+            temp.c = t.c - 1;
+            return temp;
+            /*
             t.a--;
             t.b--;
             t.c--;
-            return t;
+            return t;*/
         }
         //• констант true и false: обращение к экземпляру класса дает значение true, если
         //треугольник с заданными длинами сторон существует, иначе false;
@@ -142,10 +149,16 @@ namespace pr17
         //Продемонстрировать работу класса. 
         public static Triangle operator *(Triangle t, int scal)
         {
+            Triangle temp = new Triangle(t.a, t.b, t.c);
+            temp.a = t.a * scal;
+            temp.b = t.b * scal;
+            temp.c = t.c * scal;
+            return temp;
+            /*
             t.a *= scal;
             t.b *= scal;
             t.c *= scal;
-            return t;
+            return t;*/
         }
     }
     class Program
@@ -165,9 +178,9 @@ namespace pr17
 
             Console.WriteLine("периметр:");
             Console.WriteLine(triangle.P());
-            Console.WriteLine("площадь:" );
+            Console.WriteLine("площадь:");
             Console.WriteLine(triangle.S());
-            
+
 
             Console.WriteLine("введите новое значение для стороны А:");
             int newvalue = int.Parse(Console.ReadLine());
@@ -175,7 +188,7 @@ namespace pr17
 
             Console.WriteLine("стороны треугольника равны:");
             triangle.Side();
-            
+
             Console.WriteLine("введите индекс стороны, значение которой хотите получить:");
             int I = int.Parse(Console.ReadLine());
             Console.WriteLine("сторона с индексом {0}: ", I);
